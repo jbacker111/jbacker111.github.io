@@ -2,11 +2,12 @@
 const FIRST_SEGMENT = 30;           // 30 seconds
 const SECOND_SEGMENT = 60;          // 60 seconds
 const TOTAL_TIME = 9 * 60;         // 9 minutes = 540 seconds
-const YELLOW = "yellow";
-const YELLOW_ALLOWED_TIMES = [60, 90, 120];
 const GREEN = "green";
+const YELLOW = "yellow";
 const RED = "red";
-const GREEN_AND_RED_ALLOWED_TIMES = [30, 60];
+const GREEN_ALLOWED_TIMES = [30];
+const YELLOW_ALLOWED_TIMES = [60, 90, 120];
+const RED_ALLOWED_TIMES = [30, 60];
 
 let wakeLock = null;
 
@@ -87,19 +88,19 @@ document.addEventListener("DOMContentLoaded", () => {
       elapsed += randomLen;
     }
 
-    display.textContent = "Finished!";
+    display.textContent = "";
 	startBtn.style.visibility = 'visible';
   }
 
   // Random integer generator
   function getNextSegmentTime(color) {
 	  var allowedNumbers;
-	  if (YELLOW == color) {
+	  if (GREEN == color) {
+		  allowedNumbers = GREEN_ALLOWED_TIMES;
+	  } else if (YELLOW == color) {
 		  allowedNumbers = YELLOW_ALLOWED_TIMES;
-		  const randomIndex = Math.floor(Math.random() * allowedNumbers.length);
-		  return allowedNumbers[randomIndex];
 	  } else {
-		  allowedNumbers = GREEN_AND_RED_ALLOWED_TIMES;
+		  allowedNumbers = RED_ALLOWED_TIMES;
 	  }
 	  const randomIndex = Math.floor(Math.random() * allowedNumbers.length);
 	  return allowedNumbers[randomIndex];
