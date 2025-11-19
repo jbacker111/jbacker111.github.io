@@ -1,6 +1,6 @@
 {
-  "name": "My Mobile Site",
-  "short_name": "MySite",
+  "name": "HIIT Mix",
+  "short_name": "HIIT Mix",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
