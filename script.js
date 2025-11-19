@@ -10,6 +10,13 @@ const GREEN_AND_RED_ALLOWED_TIMES = [30, 60];
 
 let wakeLock = null;
 
+// Register service worker if available
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("Service worker registered"))
+    .catch(err => console.error("Service worker registration failed:", err));
+}
+
 // Try to request wake lock
 async function enableWakeLock() {
   try {
