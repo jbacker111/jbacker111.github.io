@@ -8,10 +8,37 @@ const GREEN = "green";
 const RED = "red";
 const GREEN_AND_RED_ALLOWED_TIMES = [30, 60];
 
+let wakeLock = null;
+
+// Try to request wake lock
+async function enableWakeLock() {
+  try {
+    wakeLock = await navigator.wakeLock.request("screen");
+
+    // Re-acquire wake lock if it is released (e.g., screen rotates)
+    wakeLock.addEventListener("release", () => {
+      console.log("Wake Lock was released");
+    });
+
+    console.log("Wake Lock active");
+  } catch (err) {
+    console.error("Wake Lock error:", err);
+  }
+}
+
+// Re-enable wake lock if tab becomes visible again
+document.addEventListener("visibilitychange", () => {
+  if (wakeLock !== null && document.visibilityState === "visible") {
+    enableWakeLock();
+  }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const display = document.getElementById("timerDisplay");
   const startBtn = document.getElementById("startBtn");
   
+  enableWakeLock();
+   
   // Utility: wait for 1 second
   const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
