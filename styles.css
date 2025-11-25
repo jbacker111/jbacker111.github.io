@@ -23,8 +23,8 @@ main {
 
 /* Timer styling */
 #timerDisplay {
-  padding: 0.75rem 1.25rem;
-  font-size: 12rem;
+  padding: 0.75rem 1.0rem;
+  font-size: 10rem;
 }  
 
 /* Button styling */
