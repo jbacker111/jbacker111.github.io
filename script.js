@@ -1,13 +1,19 @@
 // Configuration
-const FIRST_SEGMENT = 30;           // 30 seconds
-const SECOND_SEGMENT = 60;          // 60 seconds
-const TOTAL_TIME = 9 * 60;         // 9 minutes = 540 seconds
+const FIRST_SEGMENT = 30;  // 30 seconds
+const SECOND_SEGMENT = 60; // 60 seconds
+const TOTAL_TIME = 9 * 60; // 9 minutes = 540 seconds
 const GREEN = "green";
 const YELLOW = "yellow";
 const RED = "red";
 const GREEN_ALLOWED_TIMES = [30];
 const YELLOW_ALLOWED_TIMES = [60, 90, 120];
 const RED_ALLOWED_TIMES = [30, 60];
+
+// Create a seed from the current date
+const now = new Date();
+let seed = now.getFullYear() * 10000 +
+           (now.getMonth() + 1) * 100 +
+           now.getDate();  // YYYYMMDD
 
 let wakeLock = null;
 
@@ -92,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	startBtn.style.visibility = 'visible';
   }
 
-  // Random integer generator
   function getNextSegmentTime(color) {
 	  var allowedNumbers;
 	  if (GREEN == color) {
@@ -102,12 +107,12 @@ document.addEventListener("DOMContentLoaded", () => {
 	  } else {
 		  allowedNumbers = RED_ALLOWED_TIMES;
 	  }
-	  const randomIndex = Math.floor(Math.random() * allowedNumbers.length);
+	  const randomIndex = Math.floor(seededRandom() * allowedNumbers.length);
 	  return allowedNumbers[randomIndex];
   }
   
   function getNextColor(currentColor) {
-	  var num = Math.round(Math.random());
+	  var num = Math.round(seededRandom());
 	  if (GREEN == currentColor) {
 		  return num == 0 ? YELLOW : RED;
 	  }
@@ -117,6 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
 	  return num == 0 ? GREEN : YELLOW;
   }
 
+  // Use this so everyone gets the same workout for a specific day
+  function seededRandom() {
+      seed = (seed * 1664525 + 1013904223) % 4294967296;
+      return seed / 4294967296;
+  }
   startBtn.addEventListener("click", () => {
 	startBtn.style.visibility = 'hidden';
 	startSequence();
