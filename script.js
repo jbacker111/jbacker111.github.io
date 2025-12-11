@@ -6,7 +6,7 @@ const GREEN = "green";
 const YELLOW = "yellow";
 const RED = "red";
 const GREEN_ALLOWED_TIMES = [30];
-const YELLOW_ALLOWED_TIMES = [60, 90, 120];
+const YELLOW_ALLOWED_TIMES = [30, 60, 90, 120];
 const RED_ALLOWED_TIMES = [30, 60];
 
 // Create a seed from the current date
