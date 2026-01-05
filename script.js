@@ -50,6 +50,8 @@ document.addEventListener("visibilitychange", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const display = document.getElementById("timerDisplay");
   const startBtn = document.getElementById("startBtn");
+  const birthdayImg = document.getElementById('jenBirthday');
+  const birthdayDisplay = document.getElementById('birthdayDisplay');
   
   enableWakeLock();
    
@@ -67,7 +69,24 @@ document.addEventListener("DOMContentLoaded", () => {
   async function startSequence() {
     let elapsed = 0;
 	var color = GREEN;
+	
+	// Display birthday image if it's Jen's birthday
+	const birthdate = new Date(1982, 0, 8);
+	const isBirthday = now.getMonth() === birthdate.getMonth() && 
+                   now.getDate() === birthdate.getDate();
+    if (isBirthday) {
+      // Make the birthdayDisplay a flexbox
+      birthdayDisplay.style.display = 'flex';
+      birthdayDisplay.style.justifyContent = 'center'; // Horizontal centering
+      birthdayDisplay.style.alignItems = 'center';     // Vertical centering
 
+      // Ensure the image fits without distortion
+      birthdayImg.style.maxWidth = '100%';
+      birthdayImg.style.maxHeight = '100%';
+      birthdayImg.style.objectFit = 'contain';
+      birthdayDisplay.style.display = 'block';
+	}
+	
     // First 30 seconds
 	document.body.style.backgroundColor = color;
     await countdown(FIRST_SEGMENT);
@@ -95,7 +114,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     display.textContent = "";
-	startBtn.style.visibility = 'visible';
+	document.body.style.backgroundColor = "white";
+	startBtn.style.display = 'inline';
+	birthdayDisplay.style.display = 'none';
   }
 
   function getNextSegmentTime(color) {
@@ -128,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return seed / 4294967296;
   }
   startBtn.addEventListener("click", () => {
-	startBtn.style.visibility = 'hidden';
+	startBtn.style.display = 'none';
 	startSequence();
   });
 });

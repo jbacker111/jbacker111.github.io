@@ -41,3 +41,9 @@ button {
 button:active {
   opacity: 0.85;
 }
+
+#birthdayDisplay {
+  display: none;
+}
+
+
